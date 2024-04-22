@@ -1,24 +1,25 @@
 import { Fragment } from 'react'
-import { PlusCircleIcon } from '@heroicons/react/24/solid'
+import { PlusCircleIcon, XCircleIcon } from '@heroicons/react/24/solid'
 import { Dialog, Transition } from '@headlessui/react'
 import { useBudget } from '../hooks/useBudget'
 import ExpenseForm from './ExpenseForm'
 
 export default function ExpenseModal() {
-    const {state , dispatch} = useBudget()
+    const { state, dispatch } = useBudget()
 
     return (
         <>
             <div className="fixed right-5 bottom-5 flex items-center justify-center">
                 <button
-                    type="button" onClick={()=>dispatch({type: 'show-modal'})}
+                    type="button" onClick={() => dispatch({ type: 'show-modal' })}
                 >
-                    <PlusCircleIcon className='w-16 h-16 text-blue-600 rounded-full' />
+                    <PlusCircleIcon className='w-16 h-16 text-blue-600 hover:text-pink-600 rounded-full hover:rotate-45 transition-all' />
                 </button>
             </div>
 
             <Transition appear show={state.modal} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={() => dispatch({ type: 'close-modal'})}>
+
+                <Dialog as="div" className="relative z-10" onClose={() => dispatch({ type: 'close-modal' })}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -44,7 +45,14 @@ export default function ExpenseModal() {
                             >
                                 <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
 
-                                    <ExpenseForm/>
+                                    <div className="fixed left-3 top-1 flex items-center justify-center">
+                                        <button
+                                            type="button" onClick={() => dispatch({ type: 'close-modal' })}
+                                        >
+                                            <XCircleIcon className='w-16 h-16 text-gray-600 opacity-60 hover:text-gray-700 rounded-full  transition-all cursor-pointer' />
+                                        </button>
+                                    </div>
+                                    <ExpenseForm />
 
                                 </Dialog.Panel>
                             </Transition.Child>
